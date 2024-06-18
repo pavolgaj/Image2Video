@@ -92,7 +92,7 @@ def save():
 
     if len(out)==0: return
 
-    cmd='ffmpeg -hide_banner -y -f concat -safe 0 -i list.tmp -r '+str(fpsVar.get())+' -vcodec '+codecsVar.get()
+    cmd='ffmpeg -reinit_filter 0 -hide_banner -y -f concat -safe 0 -r '+str(fpsVar.get())+' -i list.tmp -r '+str(fpsVar.get())+' -vcodec '+codecsVar.get()
     if 'width' in sizeVar.get(): cmd+=' -vf scale='+sizeVar.get().split()[1]+':-1:flags=lanczos'
     elif 'height' in sizeVar.get(): cmd+=' -vf scale=-1:'+sizeVar.get().split()[1]+':flags=lanczos'
     elif not sizeVar.get()=='original': cmd+=' -vf scale='+sizeVar.get()+':flags=lanczos'
