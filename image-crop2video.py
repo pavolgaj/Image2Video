@@ -2,7 +2,7 @@
 import sys,shutil,os
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import filedialog
+from tkinter import filedialog,messagebox
 from subprocess import Popen, PIPE
 import matplotlib.pyplot as mpl
 from PIL import Image
@@ -15,7 +15,7 @@ def get_codecs():
     output=str(output.decode())
 
     if len(output)==0:
-        tk.messagebox.showerror(title='Error',message='ffmpeg not installed!')
+        messagebox.showerror(title='Error',message='ffmpeg not installed!')
         return
 
     codecs=[]
@@ -103,14 +103,14 @@ def save():
     process=Popen(cmd, shell=True)
     process.communicate()
 
-    tk.messagebox.showinfo(title='Image2Video',message='Video creation finished!')
+    messagebox.showinfo(title='Image2Video',message='Video creation finished!')
 
 def crop():
     if sizeVar.get()=='original':
-        tk.messagebox.showwarning(title='Crop image',message='Video size is set to "original"!')
+        messagebox.showwarning(title='Crop image',message='Video size is set to "original"!')
         return
     elif 'width' in sizeVar.get() or 'height' in sizeVar.get():
-        tk.messagebox.showwarning(title='Crop image',message='Video size is set to "width/height"!')
+        messagebox.showwarning(title='Crop image',message='Video size is set to "width/height"!')
         return
 
     tmp=sizeVar.get().split('x')
@@ -220,11 +220,11 @@ def crop():
     #print(area)
     #print(ratio,(area[1]-area[0])/(area[3]-area[2]))
 
-    ans=tk.messagebox.askquestion('Crop image','Do you want to crop images to size '+str(area[1]-area[0])+'x'+str(area[3]-area[2])+'?')
+    ans=messagebox.askquestion('Crop image','Do you want to crop images to size '+str(area[1]-area[0])+'x'+str(area[3]-area[2])+'?')
 
     if ans=='no': return
 
-    ans=tk.messagebox.askquestion('Crop image','Do you want to save cropped image?')
+    ans=messagebox.askquestion('Crop image','Do you want to save cropped image?')
     if ans=='yes':
         path=filedialog.askdirectory(title='Cropped images path',mustexist=False)
         if len(path)==0: path='tmp/'
@@ -246,7 +246,7 @@ def crop():
         f.write("file '"+path+name[name.rfind('/')+1:]+"'\n")
     f.close()
 
-    tk.messagebox.showinfo(title='Crop image',message='All images cropped!')
+    messagebox.showinfo(title='Crop image',message='All images cropped!')
 
 
 def close():
@@ -260,7 +260,7 @@ process=Popen('ffmpeg -h', stderr=PIPE,stdout=PIPE, shell=True)
 output=str(output.decode())
 
 if len(output)==0:
-    tk.messagebox.showerror(title='Error',message='ffmpeg not installed!')
+    messagebox.showerror(title='Error',message='ffmpeg not installed!')
     sys.exit()
 
 root = tk.Tk()

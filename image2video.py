@@ -2,7 +2,7 @@
 import sys,shutil,os
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import filedialog
+from tkinter import filedialog,messagebox
 from subprocess import Popen, PIPE
 
 def get_codecs():
@@ -11,7 +11,7 @@ def get_codecs():
     output=str(output.decode())
 
     if len(output)==0:
-        tk.messagebox.showerror(title='Error',message='ffmpeg not installed!')
+        messagebox.showerror(title='Error',message='ffmpeg not installed!')
         return
 
     codecs=[]
@@ -97,7 +97,7 @@ def save():
     process=Popen(cmd, shell=True)
     process.communicate()
 
-    tk.messagebox.showinfo(title='Image2Video',message='Video creation finished!')
+    messagebox.showinfo(title='Image2Video',message='Video creation finished!')
 
 def close():
     global root
@@ -109,7 +109,7 @@ process=Popen('ffmpeg -h', stderr=PIPE,stdout=PIPE, shell=True)
 output=str(output.decode())
 
 if len(output)==0:
-    tk.messagebox.showerror(title='Error',message='ffmpeg not installed!')
+    messagebox.showerror(title='Error',message='ffmpeg not installed!')
     sys.exit()
 
 root = tk.Tk()
